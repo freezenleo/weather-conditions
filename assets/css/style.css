@@ -1,0 +1,8 @@
+.btn-add {
+    background-color: rgb(179, 114, 240);
+    border-radius: 10px;
+}
+
+#citylist {
+    border-top: 3px solid black;
+}
