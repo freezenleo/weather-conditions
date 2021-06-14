@@ -24,12 +24,12 @@ var cityNameSubmit = function (event) {
 }
 
 //city list btn click
-var cityListClick = function () {
-    var cityName = cityListBtn.textContent;
-    console.log("cityName", cityName);
+var cityListClick = function (btnEl) {
 
-    displayWeather(data, cityName);
+    var cityName = btnEl.textContent;
+    console.log("cityNamelist", cityName);
 
+    getSearchCity(cityName);
 }
 
 //input submit button event listener
@@ -172,6 +172,7 @@ var cityBtn = function (cityName) {
 
 //fetch data from sever
 var getSearchCity = function (cityName) {
+
     var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&units=imperial&appid=dc958acf9753f5bb2aae083119c7a2da";
 
     //make a request to the url
