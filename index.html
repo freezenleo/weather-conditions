@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css">
     <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,400i,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
     <link rel="stylesheet" href="./assets/css/style.css" />
@@ -32,17 +33,27 @@
                 </div>
             </div>
 
-            <div class="col-8">
+            <div class="col-9">
                 <div id="current-info" class="row">
-                    <h2 id="current-search-city" class="text-left fw-bolder"></h2>
-                    <div id="current-city-info" class="list-group"></div>
-                </div>
-                <div id="forecast" class="5-day forecast">
-                    5 days
-                </div>
+                    <h2 id="current-search-city" class="col-12 text-left fw-bolder">
 
+                    </h2>
+                    <div id="current-city-info" class="col-12 list-group text-left fw-light">
+
+                    </div>
+                </div>
+                <div id="forecast" class="mt-5">
+                    <h3 class="text-left fw-bolder">5-Day Forecast: </h3>
+                    <!-- <div class="card">
+                        <h4 class="card-header text-left">date</h4>
+                        <!-- <div class="card-body" id="single-forecast">
+                            <span></span>
+                        </div> -->
+                </div>
             </div>
-        </main>
+
+    </div>
+    </main>
     </div>
 </body>
 <script src="./assets/js/script.js"></script>
