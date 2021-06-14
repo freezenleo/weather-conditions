@@ -23,20 +23,8 @@ var cityNameSubmit = function (event) {
     cityBtn(cityName);
 }
 
-//city list btn click
-var cityListClick = function (btnEl) {
-
-    var cityName = btnEl.textContent;
-    console.log("cityNamelist", cityName);
-
-    getSearchCity(cityName);
-}
-
 //input submit button event listener
 searchBarEl.addEventListener("submit", cityNameSubmit);
-
-//city list buttons event listener
-cityListBtn.addEventListener("click", cityListClick);
 
 // display current weather condition
 var displayWeather = function (data, searchTerm) {
@@ -161,10 +149,11 @@ var displayForecast = function (data) {
 
 //create city list buttons
 var cityBtn = function (cityName) {
-
     var btnEl = document.createElement("button");
     btnEl.classList = "btn btn-block btn-city text-white mt-2 mb-2 bg-primary";
-    btnEl.setAttribute("type", "click");
+    btnEl.addEventListener("click", () => {
+        getSearchCity(cityName)
+    });
     btnEl.textContent = cityName;
     cityListBtn.appendChild(btnEl);
 }
