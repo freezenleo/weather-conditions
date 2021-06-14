@@ -3,7 +3,9 @@ var cityNameEl = document.querySelector("#cityname");
 var cityListBtn = document.querySelector("#citylist-btn");
 var currentSearchCityEl = document.querySelector("#current-search-city");
 var currentCityInfoEl = document.querySelector("#current-city-info");
+var fiveDayContEl = document.querySelector("#five-day-container");
 
+//search input submit
 var cityNameSubmit = function (event) {
     event.preventDefault();
     console.log(event);
@@ -18,11 +20,25 @@ var cityNameSubmit = function (event) {
     else {
         alert("Please Enter a City Name");
     }
+    cityBtn(cityName);
 }
 
-//submit button event listener
+//city list btn click
+var cityListClick = function () {
+    var cityName = cityListBtn.textContent;
+    console.log("cityName", cityName);
+
+    displayWeather(data, cityName);
+
+}
+
+//input submit button event listener
 searchBarEl.addEventListener("submit", cityNameSubmit);
 
+//city list buttons event listener
+cityListBtn.addEventListener("click", cityListClick);
+
+// display current weather condition
 var displayWeather = function (data, searchTerm) {
     console.log("data", data);
     console.log("searchTerm", searchTerm);
@@ -53,6 +69,8 @@ var displayWeather = function (data, searchTerm) {
 
     //clear old content
     currentSearchCityEl.textContent = "";
+    currentCityInfoEl.textContent = "";
+    fiveDayContEl.textContent = "";
     currentSearchCityEl.textContent = searchTerm;
 
     var timestamp = new Date(data.dt * 1000);
@@ -74,6 +92,7 @@ var displayWeather = function (data, searchTerm) {
     currentSearchCityEl.appendChild(imgEl);
 }
 
+//convert city name to lat&lon
 var displayLonLat = function (data) {
     var tempEl = document.createElement("li");
     tempEl.classList = "list-group-item";
@@ -94,14 +113,62 @@ var displayLonLat = function (data) {
     uvIndexEl.classList = "list-group-item";
     uvIndexEl.textContent = "UV Index: " + data.current.uvi;
     currentCityInfoEl.appendChild(uvIndexEl);
+
+    displayForecast(data);
 }
 
+//create 5 day forecast
 var displayForecast = function (data) {
-    for (var i = 0; i < daily.length; i++) {
+    for (var i = 0; i < 5; i++) {
+        var singleDay = document.createElement("div");
+        singleDay.classList = "text-left text-white bg-dark p-3 m-auto";
 
+        var timestamp = new Date(data.daily[i].dt * 1000);
+        var day = timestamp.getDate();
+        var month = timestamp.getMonth();
+        var year = timestamp.getFullYear();
+        var date = month + "/" + day + "/" + year;
+        console.log("dateString", date);
+
+        var dateInputSingle = document.createElement("ul");
+        dateInputSingle.classList = "list-group";
+        dateInputSingle.textContent = "   " + date + "   ";
+        singleDay.appendChild(dateInputSingle);
+
+        var imgElSingle = document.createElement("img");
+        imgElSingle.classList = "wicon";
+        imgElSingle.setAttribute("src", "http://openweathermap.org/img/w/" + data.daily[i].weather[0].icon + ".png");
+        singleDay.appendChild(imgElSingle);
+
+        var tempEl = document.createElement("ul");
+        tempEl.classList = "list-group pt-3";
+        tempEl.textContent = "Temp: " + data.daily[i].temp.eve + " \u00B0F";
+        singleDay.appendChild(tempEl);
+
+        var windEl = document.createElement("ul");
+        windEl.classList = "list-group pt-3";
+        windEl.textContent = "Wind: " + data.daily[i].wind_speed + " MPH";
+        singleDay.appendChild(windEl);
+
+        var humidityEl = document.createElement("ul");
+        humidityEl.classList = "list-group pt-3";
+        humidityEl.textContent = "Humidity: " + data.daily[i].humidity + " % ";
+        singleDay.appendChild(humidityEl);
+
+        fiveDayContEl.appendChild(singleDay);
     }
-
 }
+
+//create city list buttons
+var cityBtn = function (cityName) {
+
+    var btnEl = document.createElement("button");
+    btnEl.classList = "btn btn-block btn-city text-white mt-2 mb-2 bg-primary";
+    btnEl.setAttribute("type", "click");
+    btnEl.textContent = cityName;
+    cityListBtn.appendChild(btnEl);
+}
+
 
 //fetch data from sever
 var getSearchCity = function (cityName) {
@@ -121,4 +188,4 @@ var getSearchCity = function (cityName) {
         });
 }
 
-getSearchCity("Houston");
+getSearchCity();
