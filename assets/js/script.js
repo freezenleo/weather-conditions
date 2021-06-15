@@ -8,10 +8,12 @@ var fiveDayContEl = document.querySelector("#five-day-container");
 //search input submit
 var cityNameSubmit = function (event) {
     event.preventDefault();
-    console.log(event);
+    console.log("event", event);
 
     //get value from input
     var cityName = cityNameEl.value.trim();
+
+    console.log("cityname:", cityName);
 
     if (cityName) {
         getSearchCity(cityName);
@@ -19,12 +21,15 @@ var cityNameSubmit = function (event) {
     }
     else {
         alert("Please Enter a City Name");
+        return;
     }
-    cityBtn(cityName);
+
+    // cityBtn(cityName);
 }
 
 //input submit button event listener
 searchBarEl.addEventListener("submit", cityNameSubmit);
+
 
 // display current weather condition
 var displayWeather = function (data, searchTerm) {
@@ -150,14 +155,33 @@ var displayForecast = function (data) {
 //create city list buttons
 var cityBtn = function (cityName) {
     var btnEl = document.createElement("button");
-    btnEl.classList = "btn btn-block btn-city text-white mt-2 mb-2 bg-primary";
+    btnClass = btnEl.classList = "btn btn-block btn-city text-white mt-2 mb-2 bg-primary";
     btnEl.addEventListener("click", () => {
         getSearchCity(cityName)
     });
-    btnEl.textContent = cityName;
+    btnText = btnEl.textContent = cityName;
     cityListBtn.appendChild(btnEl);
+
+    btnArr = ({
+        city: btnText,
+        bClass: btnClass
+    });
+
+    saveBtns();
 }
 
+// loading localstorage
+// var loadingLocal = function () {
+//     btnArr = JSON.parse(localStorage.getItem(buttons))
+
+
+// }
+// loadingLocal();
+//save city list buttons
+var saveBtns = function () {
+
+    localStorage.setItem("buttons", JSON.stringify(btnArr));
+}
 
 //fetch data from sever
 var getSearchCity = function (cityName) {
@@ -169,11 +193,24 @@ var getSearchCity = function (cityName) {
         .then(function (response) {
             if (response.ok) {
                 response.json().then(function (data) {
-                    displayWeather(data, cityName);
+                    console.log("firstdata", data);
+                    if (cityName.toLowerCase() === data.name.toLowerCase()) {
+                        displayWeather(data, cityName);
+                        cityBtn(cityName);
+                    }
+                    else {
+                        alert("enter name");
+                        return;
+                    }
                 });
             }
+
             else {
-                alert("Error: City not found");
+                currentSearchCityEl.textContent = "";
+                currentCityInfoEl.textContent = "";
+                fiveDayContEl.textContent = "";
+                currentSearchCityEl.textContent = "Please enter a city name"
+                return;
             }
         });
 }
