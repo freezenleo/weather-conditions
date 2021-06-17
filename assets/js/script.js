@@ -5,6 +5,27 @@ var currentSearchCityEl = document.querySelector("#current-search-city");
 var currentCityInfoEl = document.querySelector("#current-city-info");
 var fiveDayContEl = document.querySelector("#five-day-container");
 
+//init btnArr var
+var btnArr = JSON.parse(localStorage.getItem("buttons")) || [];
+console.log("btnArr", btnArr);
+
+//load local storage
+var loadBtns = function () {
+    for (var i = 0; i < btnArr.length; i++) {
+        var btnEl = document.createElement("button");
+        btnEl.classList = btnArr[i].bClass = "btn btn-block btn-city text-white mt-2 mb-2 bg-primary";
+
+        var cityName = btnEl.textContent = btnArr[i].city;
+        cityListBtn.appendChild(btnEl);
+        btnEl.addEventListener("click", () => {
+            getSearchCity(cityName)
+        });
+    }
+}
+
+loadBtns();
+
+
 //search input submit
 var cityNameSubmit = function (event) {
     event.preventDefault();
@@ -162,21 +183,14 @@ var cityBtn = function (cityName) {
     btnText = btnEl.textContent = cityName;
     cityListBtn.appendChild(btnEl);
 
-    btnArr = ({
+    btnNew = ({
         city: btnText,
         bClass: btnClass
     });
-
+    btnArr.push(btnNew);
     saveBtns();
 }
 
-// loading localstorage
-// var loadingLocal = function () {
-//     btnArr = JSON.parse(localStorage.getItem(buttons))
-
-
-// }
-// loadingLocal();
 //save city list buttons
 var saveBtns = function () {
 
@@ -196,7 +210,12 @@ var getSearchCity = function (cityName) {
                     console.log("firstdata", data);
                     if (cityName.toLowerCase() === data.name.toLowerCase()) {
                         displayWeather(data, cityName);
+                        // for (var i = 0; i < btnArr.length; i++) {
+                        //     if (btnArr[i].city !== cityName) {
+                        //         console.log("btnA", btnArr);
                         cityBtn(cityName);
+                        //     }
+                        // }
                     }
                     else {
                         alert("enter name");
