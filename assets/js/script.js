@@ -210,12 +210,15 @@ var getSearchCity = function (cityName) {
                     console.log("firstdata", data);
                     if (cityName.toLowerCase() === data.name.toLowerCase()) {
                         displayWeather(data, cityName);
-                        // for (var i = 0; i < btnArr.length; i++) {
-                        //     if (btnArr[i].city !== cityName) {
-                        //         console.log("btnA", btnArr);
-                        cityBtn(cityName);
-                        //     }
-                        // }
+                        var shouldAddButton = true;
+                        for (var i = 0; i < btnArr.length; i++) {
+                            if (btnArr[i].city.toLowerCase() === cityName.toLowerCase()) {
+                                shouldAddButton = false;
+                            }
+                        }
+                        if (shouldAddButton) {
+                            cityBtn(cityName);
+                        }
                     }
                     else {
                         alert("enter name");
