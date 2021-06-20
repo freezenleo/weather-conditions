@@ -96,12 +96,12 @@ var displayWeather = function (data, searchTerm) {
 
 
     var dateInput = document.createElement("span");
-    dateInput.addClass = "date";
+    dateInput.className = "date";
     dateInput.textContent = "   " + date + "   ";
     currentSearchCityEl.appendChild(dateInput);
 
     var imgEl = document.createElement("img");
-    imgEl.addClass = "wicon";
+    imgEl.className = "wicon";
     imgEl.setAttribute("src", "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png");
     currentSearchCityEl.appendChild(imgEl);
 }
@@ -208,6 +208,12 @@ var getSearchCity = function (cityName) {
             if (response.ok) {
                 response.json().then(function (data) {
                     console.log("firstdata", data);
+                    // if (cityName.toLowerCase() === data.name.toLowerCase()) {
+                    //     displayWeather(data, cityName);
+                    //     let arr =btnArr.filter(currentCity => currentCity.city.toLowerCase() === cityName.toLowerCase())
+                    //     if (arr.length <= 0) {
+                    //         cityBtn(cityName);
+                    //     }
                     if (cityName.toLowerCase() === data.name.toLowerCase()) {
                         displayWeather(data, cityName);
                         var shouldAddButton = true;
@@ -236,5 +242,3 @@ var getSearchCity = function (cityName) {
             }
         });
 }
-
-getSearchCity();
