@@ -242,3 +242,5 @@ var getSearchCity = function (cityName) {
             }
         });
 }
+
+getSearchCity("Austin");
