@@ -96,7 +96,7 @@ var displayWeather = function (data, searchTerm) {
 
     var imgEl = document.createElement("img");
     imgEl.className = "wicon";
-    imgEl.setAttribute("src", "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png");
+    imgEl.setAttribute("src", "https://openweathermap.org/img/w/" + data.weather[0].icon + ".png");
     currentSearchCityEl.appendChild(imgEl);
 }
 
@@ -146,7 +146,7 @@ var displayForecast = function (data) {
 
         var imgElSingle = document.createElement("img");
         imgElSingle.classList = "wicon";
-        imgElSingle.setAttribute("src", "http://openweathermap.org/img/w/" + data.daily[i].weather[0].icon + ".png");
+        imgElSingle.setAttribute("src", "https://openweathermap.org/img/w/" + data.daily[i].weather[0].icon + ".png");
         singleDay.appendChild(imgElSingle);
 
         var tempEl = document.createElement("ul");
