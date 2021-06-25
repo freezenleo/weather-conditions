@@ -123,6 +123,7 @@ var displayLonLat = function (data) {
     currentCityInfoEl.appendChild(uvIndexEl);
 
     displayForecast(data);
+    console.log(data);
 }
 
 //create 5 day forecast
@@ -163,6 +164,11 @@ var displayForecast = function (data) {
         humidityEl.classList = "list-group pt-3";
         humidityEl.textContent = "Humidity: " + data.daily[i].humidity + " % ";
         singleDay.appendChild(humidityEl);
+
+        var uvIndexF = document.createElement("ul");
+        uvIndexF.classList = "list-group pt-3";
+        uvIndexF.textContent = "UV Index: " + data.daily[i].uvi;
+        singleDay.appendChild(uvIndexF);
 
         fiveDayContEl.appendChild(singleDay);
     }
