@@ -7,7 +7,6 @@ var fiveDayContEl = document.querySelector("#five-day-container");
 
 //init btnArr var
 var btnArr = JSON.parse(localStorage.getItem("buttons")) || [];
-console.log("btnArr", btnArr);
 
 //load local storage
 var loadBtns = function () {
@@ -29,12 +28,9 @@ loadBtns();
 //search input submit
 var cityNameSubmit = function (event) {
     event.preventDefault();
-    console.log("event", event);
 
     //get value from input
     var cityName = cityNameEl.value.trim();
-
-    console.log("cityname:", cityName);
 
     if (cityName) {
         getSearchCity(cityName);
@@ -54,9 +50,6 @@ searchBarEl.addEventListener("submit", cityNameSubmit);
 
 // display current weather condition
 var displayWeather = function (data, searchTerm) {
-    console.log("data", data);
-    console.log("searchTerm", searchTerm);
-
     //check if api returned any data
     if (data.length === 0) {
         currentSearchCityEl.textContent = "No Weather Info Found";
@@ -72,7 +65,6 @@ var displayWeather = function (data, searchTerm) {
             if (response.ok) {
                 response.json().then(function (data) {
                     displayLonLat(data);
-                    console.log("lon&lat", data);
                 })
             }
             else {
@@ -89,10 +81,12 @@ var displayWeather = function (data, searchTerm) {
 
     var timestamp = new Date(data.dt * 1000);
     var day = timestamp.getDate();
-    var month = timestamp.getMonth();
+
+    var month = timestamp.getMonth() + 1;
+
     var year = timestamp.getFullYear();
     var date = month + "/" + day + "/" + year;
-    console.log("dateString", date);
+
 
 
     var dateInput = document.createElement("span");
@@ -138,11 +132,12 @@ var displayForecast = function (data) {
         singleDay.classList = "text-left text-white bg-dark p-3 m-auto";
 
         var timestamp = new Date(data.daily[i].dt * 1000);
+
         var day = timestamp.getDate();
-        var month = timestamp.getMonth();
+        var month = timestamp.getMonth() + 1;
         var year = timestamp.getFullYear();
         var date = month + "/" + day + "/" + year;
-        console.log("dateString", date);
+
 
         var dateInputSingle = document.createElement("ul");
         dateInputSingle.classList = "list-group";
@@ -207,7 +202,6 @@ var getSearchCity = function (cityName) {
         .then(function (response) {
             if (response.ok) {
                 response.json().then(function (data) {
-                    console.log("firstdata", data);
                     // if (cityName.toLowerCase() === data.name.toLowerCase()) {
                     //     displayWeather(data, cityName);
                     //     let arr =btnArr.filter(currentCity => currentCity.city.toLowerCase() === cityName.toLowerCase())
